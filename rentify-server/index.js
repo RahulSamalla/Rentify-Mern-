@@ -6,11 +6,11 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors(
-    // {
-    //     origin:["'"],
-    //     methods:["POST","GET"],
-    //     credentials:true
-    // }
+    {
+        origin:["https://rentify-api-gules.vercel.app"],
+        methods:["POST","GET"],
+        credentials:true
+    }
 
 ));
 

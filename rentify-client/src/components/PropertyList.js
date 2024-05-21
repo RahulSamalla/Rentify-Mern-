@@ -14,7 +14,7 @@ const PropertyList = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/properties');
+        const response = await axios.get('https://rentify-api-gules.vercel.app/api/properties');
         setProperties(response.data.properties);
       } catch (error) {
         console.error(error);

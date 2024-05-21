@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault();
     try {
       setLoading(true); // Set loading state to true
-      const response = await axios.post('http://localhost:5000/api/users/login', formData);
+      const response = await axios.post('https://rentify-api-gules.vercel.app/api/users/login', formData);
       console.log(response.data);
       // Clear form data after successful login
       setFormData({ email: '', password: '' });

@@ -26,7 +26,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/api/users/register', formData);
+      const response = await axios.post('https://rentify-api-gules.vercel.app/api/users/register', formData);
       
       if (response.status === 200) {
         setIsRegistered(true);

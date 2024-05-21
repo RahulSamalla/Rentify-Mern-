@@ -21,7 +21,7 @@ const SellerDashboard = () => {
       try {
         const user = JSON.parse(localStorage.getItem('user'));
         const sellerId=user._id;
-        const response = await axios.get(`http://localhost:5000/api/properties/seller/${sellerId}`);
+        const response = await axios.get(`https://rentify-api-gules.vercel.app/api/properties/seller/${sellerId}`);
         setProperties(response.data.properties);
       } catch (error) {
         console.error(error);
@@ -46,7 +46,7 @@ const SellerDashboard = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/properties/${editProperty._id}`, editProperty);
+      await axios.put(`https://rentify-api-gules.vercel.app/api/properties/${editProperty._id}`, editProperty);
       setProperties(properties.map(prop => prop._id === editProperty._id ? editProperty : prop));
       setEditProperty(null); // Close the form after submitting
     } catch (error) {
@@ -63,7 +63,7 @@ const SellerDashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.post('http://localhost:5000/api/properties', newProperty, config);
+      const response = await axios.post('https://rentify-api-gules.vercel.app/api/properties', newProperty, config);
       setProperties([...properties, response.data.property]);
       setNewProperty({
         title: '',
@@ -81,7 +81,7 @@ const SellerDashboard = () => {
 
   const handleDelete = async (propertyId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/properties/${propertyId}`);
+      await axios.delete(`https://rentify-api-gules.vercel.app/api/properties/${propertyId}`);
       setProperties(properties.filter(prop => prop._id !== propertyId));
     } catch (error) {
       console.error(error);
