@@ -5,10 +5,22 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors(
+    // {
+    //     origin:["'"],
+    //     methods:["POST","GET"],
+    //     credentials:true
+    // }
+
+));
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/rentify', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://root:root@cluster0.id3pu4o.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+    console.log('Successfully connected to the database');
+})
+.catch((err) => {
+    console.error('Error connecting to the database', err);
+});
 
 // Routes
 const userRoutes = require('./routes/userRoutes');

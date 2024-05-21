@@ -12,46 +12,29 @@ const Register = () => {
   });
 
   const [isRegistered, setIsRegistered] = useState(false);
-  const [submittedData, setSubmittedData] = useState(null);
-  const [missingFields, setMissingFields] = useState([]);
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, type, checked } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Check for missing fields
-    const missing = Object.keys(formData).filter(key => !formData[key]);
-    setMissingFields(missing);
 
-    if (missing.length === 0) {
-      try {
-        // Make API call with form data
-        const response = await axios.post('http://localhost:5000/api/users/register', formData);
-        
-        // Check if response is successful
-        if (response.status === 200) {
-          console.log('Registration successful:', response.data);
-          setIsRegistered(true);
-          setSubmittedData(response.data);
-          // Clear form data after successful registration
-          setFormData({
-            firstName: '',
-            lastName: '',
-            email: '',
-            phoneNumber: '',
-            password: '',
-            isSeller: false,
-          });
-        }
-      } catch (error) {
-        // Handle error
-        console.error('Registration failed:', error.message);
-        setError(error.message);
+    try {
+      const response = await axios.post('http://localhost:5000/api/users/register', formData);
+      
+      if (response.status === 200) {
+        setIsRegistered(true);
       }
+      
+      
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -61,13 +44,12 @@ const Register = () => {
       {isRegistered ? (
         <div>
           <h2>Registered Successfully!</h2>
-          <h3>Submitted Data:</h3>
-          <p>First Name: {submittedData.firstName}</p>
-          <p>Last Name: {submittedData.lastName}</p>
-          <p>Email: {submittedData.email}</p>
-          <p>Phone Number: {submittedData.phoneNumber}</p>
-          <p>Password: {submittedData.password}</p>
-          <p>Registered as Seller: {submittedData.isSeller ? 'Yes' : 'No'}</p>
+          <p>First Name: {formData.firstName}</p>
+          <p>Last Name: {formData.lastName}</p>
+          <p>Email: {formData.email}</p>
+          <p>Phone Number: {formData.phoneNumber}</p>
+          <p>Password: {formData.password}</p>
+          <p>Registered as Seller: {formData.isSeller ? 'Yes' : 'No'}</p>
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
@@ -77,20 +59,14 @@ const Register = () => {
           <input type="text" name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleChange} />
           <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
           <label>
-            <input type="checkbox" name="isSeller" checked={formData.isSeller} onChange={(e) => setFormData({ ...formData, isSeller: e.target.checked })} />
+            <input type="checkbox" name="isSeller" checked={formData.isSeller} onChange={handleChange} />
             Register as Seller
           </label>
           <button type="submit">Register</button>
-
-          {/* Display missing fields */}
-          {missingFields.length > 0 && (
-            <p>Please fill in the following fields: {missingFields.join(', ')}</p>
-          )}
-
-          {/* Display error message */}
-          {error && <p>Error: {error}</p>}
+          
         </form>
       )}
+      
     </div>
   );
 };
