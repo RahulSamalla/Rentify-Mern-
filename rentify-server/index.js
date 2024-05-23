@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors(
     {
         origin:["https://rentify-api-gules.vercel.app"],
-        methods:["POST","GET"],
+        methods:["POST","GET","PUT"],
         credentials:true
     }
 
