@@ -36,14 +36,14 @@ const Login = () => {
       localStorage.setItem('user', JSON.stringify(response.data.user));
       localStorage.setItem('token', response.data.token);
       setLoading(false); // Set loading state to false after successful login
-      if(loggedIn && isSeller){
+      if(loggedIn && response.data.user.isSeller){
         // <Link to="/properties" style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}>Properties</Link>
         // <PropertyList/>
         // router.push()
         navigate('/seller-dashboard');
         
       }
-      else if(loggedIn && !isSeller){
+      else if(loggedIn && !response.data.user.isSeller){
         // <Link to="/seller-dashboard" style={{ textDecoration: 'none', color: '#007bff', fontWeight: 'bold' }}>Properties</Link>
         // <SellerDashboard/>
         navigate('/properties');
