@@ -9,7 +9,8 @@ app.use(cors(
     {
         origin:["https://rentify-api-gules.vercel.app/"],
         methods:["POST","GET","PUT"],
-        credentials:true
+        credentials:true,
+        allowedHeaders: ["Content-Type", "Authorization"]
     }
 
 ));
