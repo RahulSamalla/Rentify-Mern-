@@ -7,7 +7,8 @@ const app = express();
 app.use(express.json());
 app.use(cors(
     {
-        origin:["https://rentify-api-gules.vercel.app/"],
+        // https://rentify-api-gules.vercel.app/
+        origin:["https://rentify-mern.vercel.app"],
         methods:["POST","GET","PUT"],
         credentials:true,
         allowedHeaders: ["Content-Type", "Authorization"]
